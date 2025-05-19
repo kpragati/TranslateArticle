@@ -1,5 +1,7 @@
-import openai
-openai.api_key = "API-KEY"
+from openai import OpenAI
+import os
+
+client = OpenAI(api_key=os.environ.get("OPENAI_API_KEY"))
  
 article = "「継続は力なり」このことわざは、継続的な努力と長期的な献身の力の重要性を強調しています。"
 
@@ -7,9 +9,9 @@ prompt = f"Translate an article into an English {article}"
 
 def translate_Article(prompt):
      
-     response = openai.ChatCompletion.create(
+     response = client.chat.completions.create(
         model = "gpt-4o",
-        message = [{"role": "user", "content": prompt},
+        messages = [{"role": "user", "content": prompt},
                    {"role": "assistent", "content": "You are a professional translator. Translate a news into an English"},
                    {"role": "system", "content": "direct english translator"}],
         temperature = 0.1,
